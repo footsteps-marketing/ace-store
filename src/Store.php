@@ -3,31 +3,152 @@
 use GuzzleHttp\Client;
 use Exception;
 
+/**
+ * An object containing an Ace Hardware store's info,
+ * based on aresponse from the Ace Hardware store locator.
+ */
 class Store
 {
-    const ACE_URL_FORMAT = "http://www.acehardware.com/storeLocServ?heavy=true&token=ACE&operation=storeData&storeID=%05d";
+    /**
+     * URL format for requesting JSON data from Ace's store locator
+     */
+    const ACE_REQUEST_URL_FORMAT = "http://www.acehardware.com/storeLocServ?heavy=true&token=ACE&operation=storeData&storeID=%05d";
+
+    /**
+     * URL format for requesting JSON data from Ace's store locator
+     */
+    const ACE_LANDING_PAGE_URL_FORMAT = "http://www.acehardware.com/mystore/index.jsp?store=%05d";
+
+    /**
+     * The path to the local cache folder
+     * @var string
+     */
     private $cacheFolder = null;
+
+    /**
+     * Time (in seconds) to cache data for any particular store
+     * @var int
+     */
     private $cacheLifetime = null;
+
+    /**
+     * The store number described by this object
+     * @var int
+     */
     private $storeNumber = null;
+
+    /**
+     * The URL to request for this store's store info
+     * @var string
+     */
     private $url = null;
+
+    /**
+     * The JSON response body regarding this store
+     * @var string
+     */
     private $body = null;
+
+    /**
+     * The decoded store info object
+     * @var object
+     */
     private $storeObject = null;
 
+    /**
+     * The store's name from Ace
+     * @var string
+     */
     private $locationName = null;
+
+    /**
+     * The store's address
+     * @var string
+     */
     private $address = null;
+
+    /**
+     * The store's postal code
+     * @var string
+     */
     private $postalCode = null;
+
+    /**
+     * The store's state (postal code style)
+     * @var string
+     */
     private $stateCode = null;
+
+    /**
+     * The store's city
+     * @var string
+     */
     private $city = null;
+
+    /**
+     * The store's phone number
+     * @var string
+     */
     private $phoneNumber = null;
+
+    /**
+     * The store's longitude
+     * @var float
+     */
     private $longitude = null;
+
+    /**
+     * The store's latitude
+     * @var float
+     */
     private $latitude = null;
+
+    /**
+     * The store's website (or their landing page on acehardware.com)
+     * @var string
+     */
     private $storeInfoURL = null;
+
+    /**
+     * The store's hours (by day)
+     * @var array
+     */
     private $hours = null;
+
+    /**
+     * The store's departments
+     * @var array
+     */
     private $departments = null;
+
+    /**
+     * The store's services
+     * @var array
+     */
     private $services = null;
+
+    /**
+     * The store's brands
+     * @var array
+     */
     private $brands = null;
+
+    /**
+     * The store's owner(s)
+     * @var string
+     */
     private $owner = null;
+
+    /**
+     * The store's staff
+     * @var array
+     */
     private $staff = null;
+
+    /**
+     * The store's "biography"
+     * @var string
+     */
     private $storeBiography = null;
 
 
@@ -52,7 +173,7 @@ class Store
         $this->cacheLifetime = (defined('FSM_ACE_CACHE_LIFETIME')) ? FSM_ACE_CACHE_LIFETIME : 7 * 24 * 24 * 60;
 
         $this->storeNumber = $storeNumber;
-        $this->url = sprintf(self::ACE_URL_FORMAT, $storeNumber);
+        $this->url = sprintf(self::ACE_REQUEST_URL_FORMAT, $storeNumber);
         $this->initialize();
     }
 
@@ -181,7 +302,7 @@ class Store
     public function getStoreInfoURL()
     {
         if (is_null($this->storeInfoURL)) {
-            $this->storeInfoURL = (!empty($this->storeObject->storeInfoURL)) ? $this->storeObject->storeInfoURL : sprintf("http://www.acehardware.com/mystore/index.jsp?store=%05d", $this->storeNumber);
+            $this->storeInfoURL = (!empty($this->storeObject->storeInfoURL)) ? $this->storeObject->storeInfoURL : sprintf(self::ACE_LANDING_PAGE_URL_FORMAT, $this->storeNumber);
         }
         return $this->storeInfoURL;
     }
