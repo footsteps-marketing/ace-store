@@ -11,18 +11,22 @@ $storeNumber = 1234;
 $store = new FSM\Ace\Store($storeNumber);
 echo $store->getLocationName();
 ```
+### requirements
+
+* PHP >=5.6
+* Composer requirements (symfony/yaml, guzzlehttp/guzzle)
 
 ### caching
 
 Caching of Ace store responses can be accomplished in two ways:
 
 ```php
-define('FSM_ACE_CACHEFOLDER', __DIR__ . '/cache'); // Path to a writeable cache folder
+define('FSM_ACE_CACHEFOLDER', '/path/to/cache');
 $store = new FSM\Ace\Store(1234);
 
 // or
 
-$store = new FSM\Ace\Store(1234, __DIR__ . '/cache');
+$store = new FSM\Ace\Store(1234, '/path/to/cache');
 ```
 
 The Ace store response will be stored in the Ace cache folder as `<storenumber>.json`
@@ -51,7 +55,7 @@ map:
 
 #### PHP
 ```php
-define('FSM_ACE_CONFIGPATH', __DIR__ . '/config.yaml'); // Path to a writeable cache folder
+define('FSM_ACE_CONFIGPATH', '/path/to/config.yaml');
 $store = new FSM\Ace\Store(1234);
 
 $brands = $store->getBrands() // This will return values based on the mapping above
