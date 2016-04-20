@@ -16,6 +16,8 @@
         "symfony/yaml": "^3.0"
     },
     "autoload": {
-        "FSM\\Ace": "src"
+        "psr-4": {
+            "FSM\\Ace\\": "src/"
+        }
     }
 }
