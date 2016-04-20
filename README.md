@@ -1,4 +1,4 @@
-#ace-storeinfo-getter
+#ace-store
 
 Get store info from ACE's store locator API. Supports some neat things.
 
