@@ -7,6 +7,7 @@ class Store
 {
     const ACE_URL_FORMAT = "http://www.acehardware.com/storeLocServ?heavy=true&token=ACE&operation=storeData&storeID=%05d";
     private $cacheFolder = null;
+    private $cacheLifetime = null;
     private $storeNumber = null;
     private $url = null;
     private $body = null;
@@ -35,7 +36,8 @@ class Store
      * Initialize a Store object
      *
      * Will use a cache folder if it's writeable, specified either in the constructor or
-     * in the constant `FSM_ACE_CACHEFOLDER`
+     * in the constant `FSM_ACE_CACHE_FOLDER` -- cache lifetime to be specified in the
+     * constant `FSM_ACE_CACHE_LIFETIME` (as an integer, in seconds)
      *
      * @param int    $storeNumber The store number
      * @param string $cacheFolder Path to the cache folder
@@ -44,9 +46,10 @@ class Store
     {
         $this->cacheFolder = $cacheFolder;
         
-        if (is_null($this->cacheFolder) && defined('FSM_ACE_CACHEFOLDER')) {
-            $this->cacheFolder = FSM_ACE_CACHEFOLDER;
+        if (is_null($this->cacheFolder) && defined('FSM_ACE_CACHE_FOLDER')) {
+            $this->cacheFolder = FSM_ACE_CACHE_FOLDER;
         }
+        $this->cacheLifetime = (defined('FSM_ACE_CACHE_LIFETIME')) ? FSM_ACE_CACHE_LIFETIME : 7 * 24 * 24 * 60;
 
         $this->storeNumber = $storeNumber;
         $this->url = sprintf(self::ACE_URL_FORMAT, $storeNumber);
@@ -61,7 +64,9 @@ class Store
     private function initialize()
     {
         $cachePath = $this->cacheFolder . '/' . $this->storeNumber . '.json';
-        if (is_null($this->cacheFolder) || !is_readable($cachePath)) {
+        if (is_null($this->cacheFolder) ||
+            time() - filemtime($cachePath) > $this->cacheLifetime ||
+            !is_readable($cachePath)) {
             $client = new Client();
             $response = $client->get($this->url);
 

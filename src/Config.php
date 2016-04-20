@@ -15,7 +15,7 @@ class Config
         if (!is_null(self::$config)) {
             return;
         }
-        $configPath = (defined('FSM_ACE_CONFIGPATH')) ? FSM_ACE_CONFIGPATH : __DIR__ . '/config.yaml';
+        $configPath = (defined('FSM_ACE_CONFIG_PATH')) ? FSM_ACE_CONFIG_PATH : __DIR__ . '/config.yaml';
         $parser = new YamlParser();
         self::$config = $parser->parse(file_get_contents($configPath));
     }
