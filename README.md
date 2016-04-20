@@ -58,5 +58,5 @@ map:
 define('FSM_ACE_CONFIGPATH', '/path/to/config.yaml');
 $store = new FSM\Ace\Store(1234);
 
-$brands = $store->getBrands() // This will return values based on the mapping above
+$brands = $store->getServices(); // This will return values based on the mapping above
 ```
