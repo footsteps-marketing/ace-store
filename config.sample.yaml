@@ -1,0 +1,11 @@
+map:
+  exclusive: true
+  departments:
+    'Automotive': 'Auto'
+    'Clothing': 'Apparel'
+    'Gas Stoves': 'Stoves'
+  services:
+    'Blade Sharpening': 'Knife Sharpening'
+    'Chain Saw Sharpening': 'Chainsaw Sharpening'
+    'Gift Card': 'Gift Cards'
+    'Special Order 65,000+ items': 'Special Order Services'
