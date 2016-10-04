@@ -1,26 +1,10 @@
-<?php namespace FSM\Ace;
+<?php namespace FootstepsMarketing\Ace;
 
-use Exception;
 use Symfony\Component\Yaml\Parser as YamlParser;
 
 class Config
 {
     private static $config = null;
-
-    /**
-     * Load the config
-     */
-    private static function initialize()
-    {
-        if (!is_null(self::$config)) {
-            return;
-        }
-        $configPath = (defined('FSM_ACE_CONFIG_PATH')) ? FSM_ACE_CONFIG_PATH : __DIR__ . '/config.yaml';
-        $parser = new YamlParser();
-        self::$config = $parser->parse(file_get_contents($configPath));
-    }
-
-
 
     /**
      * Get an option
@@ -40,5 +24,32 @@ class Config
         }
 
         return $option;
+    }
+
+    private static function initialize()
+    {
+        if (!is_null(self::$config)) {
+            return;
+        }
+        if (defined('FSM_ACE_CONFIG_STRING')) {
+            self::initializeWithString(FSM_ACE_CONFIG_STRING);
+            return;
+        }
+        if (defined('FSM_ACE_CONFIG_PATH')) {
+            self::initializeWithFilePath();
+            return;
+        }
+    }
+
+    private static function initializeWithString($yamlString)
+    {
+        $parser = new YamlParser();
+        self::$config = $parser->parse($yamlString);
+    }
+
+    private static function initializeWithFilePath()
+    {
+        $configPath = (defined('FSM_ACE_CONFIG_PATH')) ? FSM_ACE_CONFIG_PATH : __DIR__ . '/config.yaml';
+        self::initializeWithString(file_get_contents($configPath));
     }
 }

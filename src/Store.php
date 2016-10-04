@@ -1,4 +1,4 @@
-<?php namespace FSM\Ace;
+<?php namespace FootstepsMarketing\Ace;
 
 use GuzzleHttp\Client;
 use Exception;
@@ -451,8 +451,6 @@ class Store
 
         return $value;
     }
-
-
 
     /**
      * Get the location's departments
