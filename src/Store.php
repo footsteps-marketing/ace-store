@@ -178,6 +178,22 @@ class Store
     }
 
 
+    /**
+     * Magic getter
+     *
+     * @param $property
+     * @return mixed
+     */
+    public function __get($property)
+    {
+        if ($this->$property) {
+            return $this->$property;
+        }
+        $propertyGetter = sprintf('get%s', ucfirst($property));
+        return $this->$propertyGetter();
+    }
+
+
 
     /**
      * Load the store object (remotely or from cache)
@@ -288,9 +304,25 @@ class Store
     public function getPhoneNumber()
     {
         if (is_null($this->phoneNumber)) {
-            $this->phoneNumber = $this->storeObject->phoneNumber;
+            $this->phoneNumber = $this->phoneNumberfy($this->storeObject->phoneNumber);
         }
         return $this->phoneNumber;
+    }
+
+
+
+    /**
+     * Format a phone number in the US-style
+     *
+     * @param $number
+     * @return string
+     */
+    private function phoneNumberfy($number)
+    {
+        if (preg_match('/^(\d{3})(\d{3})(\d{4})$/', (string) $number, $matches)) {
+            return sprintf('(%s) %s-%s', $matches[1], $matches[2], $matches[3]);
+        }
+        return (string) $number;
     }
 
 
