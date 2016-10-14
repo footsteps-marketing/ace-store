@@ -322,10 +322,10 @@ class Store
 
         $map = Config::get('map', 'departments');
 
-        $departments = array_unique(array_filter(array_map(function ($item) use ($map) {
+        $departments = array_values(array_unique(array_filter(array_map(function ($item) use ($map) {
             return self::map($item->featureLongDesc, $map);
-        }, $departments)));
-        return $departments;
+        }, $departments))));
+        return !empty($departments) ? $departments : [];
     }
 
 
@@ -342,10 +342,10 @@ class Store
 
         $map = Config::get('map', 'services');
 
-        $services = array_unique(array_filter(array_map(function ($item) use ($map) {
+        $services = array_values(array_unique(array_filter(array_map(function ($item) use ($map) {
             return self::map($item->featureLongDesc, $map);
-        }, $services)));
-        return $services;
+        }, $services))));
+        return !empty($services) ? $services : [];
     }
 
 
@@ -362,10 +362,10 @@ class Store
 
         $map = Config::get('map', 'brands');
 
-        $brands = array_unique(array_filter(array_map(function ($item) use ($map) {
+        $brands = array_values(array_unique(array_filter(array_map(function ($item) use ($map) {
             return self::map($item->featureLongDesc, $map);
-        }, $brands)));
-        return $brands;
+        }, $brands))));
+        return !empty($brands) ? $brands : [];
     }
 
 
