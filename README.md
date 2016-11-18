@@ -15,7 +15,7 @@ Then use it in your project
 require __DIR__ . '/vendor/autoload.php';
 
 $storeNumber = 1234;
-$store = new FSM\Ace\Store($storeNumber);
+$store = new FootstepsMarketing\Ace\Store($storeNumber);
 echo $store->getLocationName();
 ```
 
@@ -29,11 +29,11 @@ Caching of Ace store responses can be accomplished in two ways:
 
 ```php
 define('FSM_ACE_CACHE_FOLDER', '/path/to/cache');
-$store = new FSM\Ace\Store(1234);
+$store = new FootstepsMarketing\Ace\Store(1234);
 
 // or
 
-$store = new FSM\Ace\Store(1234, '/path/to/cache');
+$store = new FootstepsMarketing\Ace\Store(1234, '/path/to/cache');
 ```
 
 Cache lifetime defaults to one week -- it can be modified by setting the constant `FSM_ACE_CACHE_LIFETIME`
@@ -41,7 +41,7 @@ Cache lifetime defaults to one week -- it can be modified by setting the constan
 ```php
 define('FSM_ACE_CACHE_LIFETIME', 1 * 24 * 60 * 60); // Desired lifetime in seconds
 define('FSM_ACE_CACHE_FOLDER', '/path/to/cache');
-$store = new FSM\Ace\Store(1234);
+$store = new FootstepsMarketing\Ace\Store(1234);
 ```
 
 The Ace store response will be stored in the Ace cache folder as `<storenumber>.json`
@@ -71,7 +71,7 @@ map:
 #### PHP
 ```php
 define('FSM_ACE_CONFIG_PATH', '/path/to/config.yaml');
-$store = new FSM\Ace\Store(1234);
+$store = new FootstepsMarketing\Ace\Store(1234);
 
 $brands = $store->getServices(); // This will return values based on the mapping above
 ```

@@ -230,7 +230,7 @@ class Store
 
     /**
      * Get the location's store number
-     * @return array
+     * @return int
      */
     public function getStoreNumber()
     {

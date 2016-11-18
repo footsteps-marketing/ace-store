@@ -1,3 +1,5 @@
 /cache/
 /vendor/
 config.yaml
+/.idea
+/*.php
