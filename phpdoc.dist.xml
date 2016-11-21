@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <title>ace-store</title>
+    <parser>
+        <target>reports/phpdoc</target>
+    </parser>
+    <transformer>
+        <target>reports/phpdoc</target>
+    </transformer>
+    <transformations>
+        <template name="clean" />
+        <template name="checkstyle" />
+    </transformations>
+    <files>
+        <directory>./src/</directory>
+    </files>
+</phpdoc>
